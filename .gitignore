@@ -1,0 +1,23 @@
+@"
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+.venv313/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# PyCharm
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+"@ | Set-Content .gitignore
