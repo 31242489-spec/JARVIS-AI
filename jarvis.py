@@ -446,7 +446,7 @@ tools = [
 OLLAMA_URL = "http://127.0.0.1:11434/api/chat"
 
 MODEL = "gemma4:latest"
-
+CLOUD_URL = "https://jarvis-cloud-backend-inzd.onrender.com/api/chat"
 
 def ollama_chat(messages, use_tools=True):
 
@@ -499,7 +499,41 @@ def ollama_chat(messages, use_tools=True):
         print("OLLAMA ERROR:", e)
 
         return None
+def cloud_chat(message):
 
+    data = {
+        "message": message
+    }
+
+    request = urllib.request.Request(
+        CLOUD_URL,
+        data=json.dumps(data).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json"
+        }
+    )
+
+    try:
+
+        response = urllib.request.urlopen(
+            request,
+            timeout=30
+        )
+
+        result = json.loads(
+            response.read().decode("utf-8")
+        )
+
+        return result.get(
+            "reply",
+            "No response from cloud."
+        )
+
+    except Exception as e:
+
+        print("CLOUD ERROR:", e)
+
+        return None
 
 # =========================================================
 # ASK JARVIS
@@ -735,7 +769,35 @@ while True:
     # AI
     # -----------------------------------------------------
 
-    answer = ask_jarvis(command)
+    # -----------------------------------------------------
+    # AI
+    # -----------------------------------------------------
+
+    if command.startswith("ask the cloud"):
+
+        cloud_message = command.replace(
+            "ask the cloud",
+            "",
+            1
+        ).strip()
+
+        if cloud_message:
+
+            cloud_answer = cloud_chat(cloud_message)
+
+            if cloud_answer is None:
+                answer = "I could not connect to the cloud."
+
+            else:
+                answer = cloud_answer
+
+        else:
+
+            answer = "What would you like me to ask the cloud?"cd
+
+    else:
+
+        answer = ask_jarvis(command)
 
     print("JARVIS:", answer)
 
