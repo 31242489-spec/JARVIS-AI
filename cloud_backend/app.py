@@ -98,15 +98,23 @@ def chat():
             provider="gemini",
         )
 
+
     except Exception as e:
 
         print(
+
             "GEMINI ERROR:",
+
             repr(e)
+
         )
 
         return jsonify(
-            error="Cloud AI request failed."
+
+            error="Cloud AI request failed.",
+
+            details=repr(e)
+
         ), 500
 
 
