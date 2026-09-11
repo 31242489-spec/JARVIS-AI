@@ -110,11 +110,7 @@ def chat():
         )
 
         return jsonify(
-
-            error="Cloud AI request failed.",
-
-            details=repr(e)
-
+            error="Cloud AI request failed."
         ), 500
 
 
