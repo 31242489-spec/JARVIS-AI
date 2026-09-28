@@ -14,11 +14,7 @@ from google import genai
 
 app = Flask(__name__)
 
-@app.get("/debug-config")
-def debug_config():
-    return jsonify(
-        gemini_key_set=bool(os.environ.get("GEMINI_API_KEY"))
-    )
+
 # =========================================================
 # HOME
 # =========================================================
@@ -113,10 +109,8 @@ def chat():
 
         )
         return jsonify(
-            error="Cloud AI request failed.",
-            details=repr(e)
+            error="Cloud AI request failed."
         ), 500
-
 # =========================================================
 # START SERVER
 # =========================================================

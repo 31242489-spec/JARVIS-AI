@@ -509,7 +509,8 @@ def cloud_chat(message):
         CLOUD_URL,
         data=json.dumps(data).encode("utf-8"),
         headers={
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "User-Agent": "JARVIS/1.0"
         }
     )
 
@@ -529,10 +530,13 @@ def cloud_chat(message):
             "No response from cloud."
         )
 
+    except urllib.error.HTTPError as e:
+        print("CLOUD HTTP ERROR:", e.code)
+        print("CLOUD ERROR BODY:", e.read().decode("utf-8"))
+        return None
+
     except Exception as e:
-
         print("CLOUD ERROR:", e)
-
         return None
 
 # =========================================================
@@ -793,7 +797,7 @@ while True:
 
         else:
 
-            answer = "What would you like me to ask the cloud?"cd
+            answer = "What would you like me to ask the cloud?"
 
     else:
 
